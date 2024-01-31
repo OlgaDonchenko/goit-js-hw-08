@@ -1,0 +1,8 @@
+ul{
+    user-select: none;
+        list-style: none;
+}
+.gallery-image img {
+    width: 250px;
+        height: 300px;
+}
