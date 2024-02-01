@@ -68,7 +68,7 @@ const container = document.querySelector(".gallery");
 container.innerHTML = createProductsMarkup(images);
 
 function createProductsMarkup(gallery) {
-    return gallery.map(({ preview, original, description }) =>`
+  return gallery.map(({ preview, original, description }) => `
         <li class="gallery-item">
   <a class="gallery-link" href="${original}">
     <img
@@ -79,7 +79,40 @@ function createProductsMarkup(gallery) {
     />
   </a>
 </li>`
-    ).join("")
+  ).join("");
 }
+// // console.log(createProductsMarkup(images));
 
+    let currentModal = null;
+
+    container.addEventListener('click', (event) => {
+        if (event.target === event.currentTarget){
+            return;
+        }
+
+        const imageCard = event.target.closest('.gallery-item');
+        const idClicked = images.indexOf(images.find((image) => imageCard.innerHTML.includes(image.preview)));
+
+        const {
+            preview, original, description
+        } = images[idClicked];
+
+        currentModal = basicLightbox.create(
+            `<div class="modal">
+                <img src="${original}" alt="${description}">
+            </div>`
+        );
+
+        currentModal.show();
+    });
+
+    document.addEventListener('keyup', ({ code }) => {
+        if (code !== 'Escape'){
+            return;
+        }
+
+        if (currentModal) {
+            currentModal.close();
+        }
+    });
 

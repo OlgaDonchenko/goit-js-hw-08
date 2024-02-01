@@ -1,8 +1,30 @@
-ul{
-    user-select: none;
-        list-style: none;
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
-.gallery-image img {
-    width: 250px;
-        height: 300px;
+
+.gallery {
+        display: flex;
+        width: 1128px;
+        padding: 24px 156px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin: auto;
+        column-gap: 24px;
+        row-gap: 24px;
+        background: #FFF;
+        margin-top: 85px;
+        margin-bottom: 50px;
+    }
+
+.gallery img {
+    width: 360px;
+    height: 200px;
 }
+
+   .modal img {
+       max-width: 1112px;
+       max-height: 640px;
+   }
