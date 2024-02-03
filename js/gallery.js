@@ -65,54 +65,50 @@ const images = [
 ];
 
 const container = document.querySelector(".gallery");
-container.innerHTML = createProductsMarkup(images);
+container.insertAdjacentHTML('beforeEnd', createProductsMarkup(images));
+
 
 function createProductsMarkup(gallery) {
-  return gallery.map(({ preview, original, description }) => `
+    return gallery.map(({ preview, original, description }) => `
         <li class="gallery-item">
-  <a class="gallery-link" href="${original}">
-    <img
-      class="gallery-image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</li>`
-  ).join("");
+            <a class="gallery-link" href="#" data-source="${original}">
+                <img class="gallery-image" src="${preview}" alt="${description}">
+            </a>
+        </li>`
+    ).join("");
 }
-// // console.log(createProductsMarkup(images));
 
-    let currentModal = null;
+let currentModal = null;
 
-    container.addEventListener('click', (event) => {
-        if (event.target === event.currentTarget){
-            return;
-        }
+container.addEventListener('click', (event) => {
+    event.preventDefault(); 
 
-        const imageCard = event.target.closest('.gallery-item');
-        const idClicked = images.indexOf(images.find((image) => imageCard.innerHTML.includes(image.preview)));
+    if (event.target === event.currentTarget) {
+        return;
+    }
 
-        const {
-            preview, original, description
-        } = images[idClicked];
+    const imageLink = event.target.closest('.gallery-link');
+    if (!imageLink) {
+        return;
+    }
 
-        currentModal = basicLightbox.create(
-            `<div class="modal">
-                <img src="${original}" alt="${description}">
-            </div>`
-        );
+    const originalSource = imageLink.dataset.source;
 
-        currentModal.show();
-    });
+    currentModal = basicLightbox.create(
+        `<div class="modal">
+            <img src="${originalSource}" alt="">
+        </div>`
+    );
 
-    document.addEventListener('keyup', ({ code }) => {
-        if (code !== 'Escape'){
-            return;
-        }
+    currentModal.show();
+});
 
-        if (currentModal) {
-            currentModal.close();
-        }
-    });
+document.addEventListener('keyup', ({ code }) => {
+    if (code !== 'Escape') {
+        return;
+    }
 
+    if (currentModal) {
+        currentModal.close();
+    }
+});
